@@ -47,7 +47,7 @@ exports.signup = (req, res) =>{
         console.log(token);
         const emailData = {
             from: process.env.EMAIL_FROM,
-            to: process.env.EMAIL_TO,
+            to: `${email}`,
             subject: `Account activation link`,
             html: `
                 <h2>Please use the link to activate your account</h2>
@@ -61,7 +61,7 @@ exports.signup = (req, res) =>{
         sgMail.send(emailData).then(sent=>{
             console.log('SIGNUP EMAIL SENT',sent);
             return res.json({
-                message: `Email has been sent to ${process.env.EMAIL_TO}. Follow the instruction to activate your account.`
+                message: `Email has been sent to ${email}. Follow the instruction to activate your account.`
             });
         })
         .catch(err=>{
