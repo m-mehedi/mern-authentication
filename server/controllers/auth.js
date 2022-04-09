@@ -108,7 +108,7 @@ exports.accountValidation=(req, res)=>{
     }
 }
 
-exports.signin=(req, res) => {
+exports.login=(req, res) => {
     const {name, email, password} = req.body
     //check if user exists
     User.findOne({email}).exec((err,user) => {
