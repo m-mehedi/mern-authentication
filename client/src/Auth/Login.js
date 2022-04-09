@@ -7,15 +7,14 @@ import "react-toastify/dist/ReactToastify.min.css";
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 
-const Signup = () => {
+const Login = () => {
   const [values, setValues] = useState({
-    name: "",
     email: "",
     password: "",
     buttonText: "Submit",
   });
 
-  const { name, email, password, buttonText } = values;
+  const { email, password, buttonText } = values;
 
   const handleChange = (name) => (event) => {
     console.log(event.target.value);
@@ -27,34 +26,26 @@ const Signup = () => {
     setValues({ ...values, buttonText: "Submitting.." });
     axios({
       method: "POST",
-      url: `${process.env.REACT_APP_API}/signup`,
-      data: { name, email, password },
+      url: `${process.env.REACT_APP_API}/login`,
+      data: { email, password },
     })
       .then((response) => {
-        console.log("SIGNUP SUCCESS", response);
+        console.log("LOGIN SUCCESS", response);
+
+        // Save the response (user, token) in (LocalStorage/cookie)
         setValues({ ...values, name: "", email: "", password: "", buttonText: "Submitted" });
-        toast.success(response.data.message);
+        toast.success(`Hey ${response.data.user.name}, Welcome back!`);
       })
       .catch((error) => {
-        console.log("SIGNUP ERROR", error.response.data);
+        console.log("LOGIN ERROR", error.response.data);
         setValues({ ...values, buttonText:"Submit" });
         toast.error(error.response.data.error);
       });
   };
 
-  const signupForm = () => {
+  const loginForm = () => {
     return (
       <form>
-        <div className="form-group">
-          <label className="text-muted">Name</label>
-          <input
-            onChange={handleChange("name")}
-            value={name}
-            type="text"
-            className="form-control"
-          />
-        </div>
-
         <div className="form-group">
           <label className="text-muted">Email</label>
           <input
@@ -73,13 +64,14 @@ const Signup = () => {
             type="password"
             className="form-control"
           />
-        </div>  
+        </div>
 
         <Box sx={{ p: 1}} display="flex" justifyContent="flex-end">
             <Button variant="contained" color="success" onClick={clickSubmit} >
             {buttonText}
             </Button>
         </Box>
+
       </form>
     );
   };
@@ -89,10 +81,10 @@ const Signup = () => {
       <div className="col-d-6 offset-md-3">
         <ToastContainer />
         {/* {JSON.stringify({ name, email, password })} */}
-        <h1 className="p-5 text-center">Signup</h1>
-        {signupForm()}
+        <h1 className="p-5 text-center">Login</h1>
+        {loginForm()}
       </div>
     </Layout>
   );
 };
-export default Signup;
+export default Login;
