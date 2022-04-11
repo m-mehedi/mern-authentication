@@ -1,46 +1,82 @@
 import React, { Fragment } from "react";
 import Container from "@mui/material/Container";
 // import ColorTabs from "./Nav";
-import { Link, 
+import {
+  Link,
   useLocation,
-  // useParams 
+  // useParams ,
+  Navigation,
+  useNavigate,
 } from "react-router-dom";
-  import withRouter from './withRouter';
+import { isAuth, logout } from "../Auth/helpers";
+import withRouter from "./withRouter";
 
 const Layout = ({ children }) => {
+  let location = useLocation();
+  // const params = useParams();
+  // const isActive = location.pathname;
 
-    let location = useLocation();
-    // const params = useParams();
-    // const isActive = location.pathname;
-    const isActive = path => {
-        if(location.pathname === path){
-          return {color: '#000'}
-        } else {
-          return {color: '#FFF'}
-        }
+  const history = useNavigate();
+
+  const isActive = (path) => {
+    if (location.pathname === path) {
+      return { color: "#000" };
+    } else {
+      return { color: "#FFF" };
     }
-    // console.log(location.pathname);
+  };
+  // console.log(location.pathname);
 
   const nav = () => (
     <ul className="nav nav-tabs bg-primary">
       <li className="nav-item">
-        <Link to="/" className="nav-link" style={isActive('/')}>
+        <Link to="/" className="nav-link" style={isActive("/")}>
           Home
-           {/* {JSON.stringify(location.pathname)} */}
+          {/* {JSON.stringify(location.pathname)} */}
         </Link>
       </li>
 
-      <li className="nav-item">
-        <Link to="/login" className="nav-link" style={isActive('/login')}>
-          Login
-        </Link>
-      </li>
+      {!isAuth() && (
+        <Fragment>
+          <li className="nav-item">
+            <Link to="/login" className="nav-link" style={isActive("/login")}>
+              Login
+            </Link>
+          </li>
 
-      <li className="nav-item">
-        <Link to="/signup" className="nav-link" style={isActive('/signup')}>
-          Sign up
-        </Link>
-      </li>
+          <li className="nav-item">
+            <Link to="/signup" className="nav-link" style={isActive("/signup")}>
+              Sign up
+            </Link>
+          </li>
+        </Fragment>
+      )}
+      {isActive() && (
+        <li className="nav-item">
+          <a
+            className="nav-link" 
+          >
+            <span style={{ cursor: 'pointer', color: '#FFF' }}>{isAuth().name}</span>
+          </a>
+        </li>
+
+      )}
+
+      {isAuth() && (
+        <li className="nav-item">
+          <a
+            className="nav-link"            
+            style={{ cursor: 'pointer', color: '#FFF' }}
+            onClick={() => {
+              logout(() => {
+                history("/");
+              });
+            }}
+          >
+            Logout
+          </a>
+        </li>
+      )}
     </ul>
   );
 

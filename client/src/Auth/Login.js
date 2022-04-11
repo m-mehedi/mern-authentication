@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-// import { Link, Redirect } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import Layout from "../core/Layout";
 import axios from "axios";
+import { authenticate, isAuth } from "./helpers";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import Box from '@mui/material/Box';
@@ -33,8 +34,12 @@ const Login = () => {
         console.log("LOGIN SUCCESS", response);
 
         // Save the response (user, token) in (LocalStorage/cookie)
-        setValues({ ...values, name: "", email: "", password: "", buttonText: "Submitted" });
-        toast.success(`Hey ${response.data.user.name}, Welcome back!`);
+
+        authenticate(response, ()=>{
+          setValues({ ...values, name: "", email: "", password: "", buttonText: "Submitted" });
+          toast.success(`Hey ${response.data.user.name}, Welcome back!`);
+        })
+
       })
       .catch((error) => {
         console.log("LOGIN ERROR", error.response.data);
@@ -80,6 +85,7 @@ const Login = () => {
     <Layout>
       <div className="col-d-6 offset-md-3">
         <ToastContainer />
+        { isAuth() ? <Navigate to='/' /> : null }
         {/* {JSON.stringify({ name, email, password })} */}
         <h1 className="p-5 text-center">Login</h1>
         {loginForm()}

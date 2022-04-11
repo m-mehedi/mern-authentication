@@ -8,3 +8,9 @@ jsonwebtoken # Generate json web token
 mongoose # Interact with Mongodb
 morgan # See API endpoints
 @sendgrid/mail # Send email to users
+
+
+
+
+## Client
+npm i js-cookie
