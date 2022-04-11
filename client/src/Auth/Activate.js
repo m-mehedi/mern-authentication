@@ -52,9 +52,9 @@ const Activate = () => {
     <div>
         <Box display="flex" alignItems="center"
         justifyContent="center">
-        <h3>
-            Hey {name}, Please activate your account!
-        </h3>
+            <h3>
+                Hey {name}, Please activate your account!
+            </h3>
         </Box>
 
       <Box sx={{ p: 1 }} display="flex" m="auto">
