@@ -5,7 +5,7 @@ import {
   Link,
   useLocation,
   // useParams ,
-  Navigation,
+  // Navigation,
   useNavigate,
 } from "react-router-dom";
 import { isAuth, logout } from "../Auth/helpers";
@@ -51,20 +51,28 @@ const Layout = ({ children }) => {
           </li>
         </Fragment>
       )}
-      {isActive() && (
-        <li className="nav-item">
-          <a
-            className="nav-link" 
-          >
-            <span style={{ cursor: 'pointer', color: '#FFF' }}>{isAuth().name}</span>
-          </a>
-        </li>
-
-      )}
 
       {isAuth() && (
+        <Fragment>
+          
+          <li className="nav-item">
+            <Link to="/admin/company" className="nav-link" style={isActive("/admin/company")}>
+              Admin
+            </Link>
+          </li>
+          
+          <li className="nav-item">
+          <span
+            className="nav-link"            
+            style={{ cursor: 'pointer', color: '#FFF' }}
+          >
+            <span>{isAuth().name}</span>
+          </span>
+          </li>
+
+        
         <li className="nav-item">
-          <a
+          <span
             className="nav-link"            
             style={{ cursor: 'pointer', color: '#FFF' }}
             onClick={() => {
@@ -74,8 +82,10 @@ const Layout = ({ children }) => {
             }}
           >
             Logout
-          </a>
+          </span>
         </li>
+
+        </Fragment>
       )}
     </ul>
   );
