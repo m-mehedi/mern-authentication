@@ -4,5 +4,5 @@ import { isAuth } from "./helpers";
 export default function Private(){
     const auth = isAuth();
 
-    return auth ? <Outlet /> : <Navigate to="/login" />;
+    return (auth && auth.role === 'admin') ? <Outlet /> : <Navigate to="/login" />;
 }

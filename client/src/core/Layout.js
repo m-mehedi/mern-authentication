@@ -10,6 +10,8 @@ import {
 } from "react-router-dom";
 import { isAuth, logout } from "../Auth/helpers";
 import withRouter from "./withRouter";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.min.css";
 
 const Layout = ({ children }) => {
   let location = useLocation();
@@ -51,24 +53,23 @@ const Layout = ({ children }) => {
           </li>
         </Fragment>
       )}
+      {isAuth() && isAuth().role === 'admin' && (          
+          <li className="nav-item">
+            <Link to="/admin/company" className="nav-link" style={isActive("/admin/company")}>              
+            <span>{isAuth().name}</span>
+            </Link>
+          </li>
+      )}
+      {isAuth() && isAuth().role === 'subscriber' && (
+          <li className="nav-item">
+            <Link to="/users" className="nav-link" style={isActive("/users")}>              
+            <span>{isAuth().name}</span>
+            </Link>
+          </li>
+      )}
 
       {isAuth() && (
         <Fragment>
-          
-          <li className="nav-item">
-            <Link to="/admin/company" className="nav-link" style={isActive("/admin/company")}>
-              Admin
-            </Link>
-          </li>
-          
-          <li className="nav-item">
-          <span
-            className="nav-link"            
-            style={{ cursor: 'pointer', color: '#FFF' }}
-          >
-            <span>{isAuth().name}</span>
-          </span>
-          </li>
 
         
         <li className="nav-item">
@@ -77,6 +78,7 @@ const Layout = ({ children }) => {
             style={{ cursor: 'pointer', color: '#FFF' }}
             onClick={() => {
               logout(() => {
+                toast.error(`You are logged out!`);
                 history("/");
               });
             }}
@@ -94,6 +96,7 @@ const Layout = ({ children }) => {
     <Fragment>
       {/* <ColorTabs /> */}
       {nav()}
+        <ToastContainer />
 
       <div>
         <Container maxWidth="sm">{children}</Container>
@@ -102,4 +105,4 @@ const Layout = ({ children }) => {
   );
 };
 
-export default withRouter(Layout);
+export default Layout;

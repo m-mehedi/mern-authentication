@@ -3,7 +3,7 @@ import Layout from "../../../core/Layout";
 
 const Company = () => {
   return(
-  <Layout>
+  <Layout>    
     <h1>Company</h1>
   </Layout>
   )};

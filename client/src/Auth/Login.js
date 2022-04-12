@@ -5,12 +5,12 @@ import axios from "axios";
 import { authenticate, isAuth } from "./helpers";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 
 const Login = () => {
   const [values, setValues] = useState({
-    email: "",
+    email: "mehedihasan.anamul@gmail.com",
     password: "",
     buttonText: "Submit",
   });
@@ -35,15 +35,25 @@ const Login = () => {
 
         // Save the response (user, token) in (LocalStorage/cookie)
 
-        authenticate(response, ()=>{
-          setValues({ ...values, name: "", email: "", password: "", buttonText: "Submitted" });
+        authenticate(response, () => {
+          setValues({
+            ...values,
+            name: "",
+            email: "",
+            password: "",
+            buttonText: "Submitted",
+          });
           toast.success(`Hey ${response.data.user.name}, Welcome back!`);
-        })
-
+          isAuth() && isAuth().role === "admin" ? (
+            <Navigate to="/admin/company" />
+          ) : (
+            <Navigate to="/" />
+          );
+        });
       })
       .catch((error) => {
         console.log("LOGIN ERROR", error.response.data);
-        setValues({ ...values, buttonText:"Submit" });
+        setValues({ ...values, buttonText: "Submit" });
         toast.error(error.response.data.error);
       });
   };
@@ -71,12 +81,11 @@ const Login = () => {
           />
         </div>
 
-        <Box sx={{ p: 1}} display="flex" justifyContent="flex-end">
-            <Button variant="contained" color="success" onClick={clickSubmit} >
+        <Box sx={{ p: 1 }} display="flex" justifyContent="flex-end">
+          <Button variant="contained" color="success" onClick={clickSubmit}>
             {buttonText}
-            </Button>
+          </Button>
         </Box>
-
       </form>
     );
   };
@@ -85,7 +94,7 @@ const Login = () => {
     <Layout>
       <div className="col-d-6 offset-md-3">
         <ToastContainer />
-        { isAuth() ? <Navigate to='/' /> : null }
+        {isAuth() ? <Navigate to="/" /> : null}
         {/* {JSON.stringify({ name, email, password })} */}
         <h1 className="p-5 text-center">Login</h1>
         {loginForm()}
