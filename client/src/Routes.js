@@ -7,7 +7,7 @@ import Activate from "./Auth/Activate";
 import Users from "./core/Users";
 import PrivateRoute from "./Auth/PrivateRoute";
 import Private from "./Auth/Private";
-import Company from "./Pages/Admin/Company/Company";
+import Profile from "./Pages/Admin/Profile";
 import CreateCompany from "./Pages/Admin/Company/Create";
 
 const MyRoutes = () =>{
@@ -19,10 +19,10 @@ const MyRoutes = () =>{
                 <Route path="/login"  element={<Login />} />
                 <Route path="/auth/activate/:token"  element={<Activate />} />
                 <Route path="/admin/*" element={<Private />}>
-                    <Route path="company" element={<Company />} />
+                    <Route path="profile" element={<Profile />} />
                     <Route path="company/create" element={<CreateCompany />} />
                 </Route>
-                <Route path="/users"  element={<PrivateRoute><Users /></PrivateRoute>} />
+                <Route path="/user/profile"  element={<PrivateRoute><Users /></PrivateRoute>} />
             </Routes>
         </BrowserRouter>
     )

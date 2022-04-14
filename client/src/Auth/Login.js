@@ -44,10 +44,11 @@ const Login = () => {
             buttonText: "Submitted",
           });
           toast.success(`Hey ${response.data.user.name}, Welcome back!`);
+          
           isAuth() && isAuth().role === "admin" ? (
-            <Navigate to="/admin/company" />
+            <Navigate to="/admin/profile" />
           ) : (
-            <Navigate to="/" />
+            <Navigate to="/user/profile" />
           );
         });
       })

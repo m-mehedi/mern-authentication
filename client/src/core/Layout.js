@@ -54,14 +54,14 @@ const Layout = ({ children }) => {
       )}
       {isAuth() && isAuth().role === 'admin' && (          
           <li className="nav-item">
-            <Link to="/admin/company" className="nav-link" style={isActive("/admin/company")}>              
+            <Link to="/admin/profile" className="nav-link" style={isActive("/admin/profile")}>              
             <span>{isAuth().name}</span>
             </Link>
           </li>
       )}
       {isAuth() && isAuth().role === 'subscriber' && (
           <li className="nav-item">
-            <Link to="/users" className="nav-link" style={isActive("/users")}>              
+            <Link to="/user/profile" className="nav-link" style={isActive("/user/profile")}>              
             <span>{isAuth().name}</span>
             </Link>
           </li>
