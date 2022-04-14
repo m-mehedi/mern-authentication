@@ -150,6 +150,6 @@ exports.login = (req, res) => {
 };
 
 exports.requireLogin = expressJWT({
-  secret: process.env.JWT_SECRET,
+  secret: process.env.JWT_SECRET, // req.user
   algorithms: ['HS256']
 });

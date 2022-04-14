@@ -1,3 +1,4 @@
+const user = require("../models/user");
 const User = require("../models/user");
 
 exports.read = (req, res) => {
@@ -9,9 +10,52 @@ exports.read = (req, res) => {
         error: "User not found",
       });
     }
-    // hide 
+    // hide
     user.hashed_password = undefined;
     user.salt = undefined;
     res.json(user);
   });
+};
+
+exports.update = (req, res) => {
+  const { name, password } = req.body;
+
+  User.findOne({ _id: req.user._id }, (err, user) => {
+    if (err || !user) {
+      return res.status(400).json({
+        error: "User not found",
+      });
+    }
+    if (!name) {
+      return res.status(400).json({
+        error: "Name is required",
+      });
+    } else {
+      user.name = name;
+    }
+
+    if (password) {
+      if (password.length < 6) {
+        return res.status(400).json({
+          error: "Password should be minimum 6 characters long.",
+        });
+      } else {
+        user.password = password;
+      }
+    }
+
+    // save user
+    user.save((err, updatedUser) => {
+      if (err) {
+        console.log("USER UPDATE ERROR");
+        return res.status(400).json({
+          error: "User updating failed",
+        });
+      }
+      updatedUser.hashed_password = undefined;
+      updatedUser.salt = undefined;
+      res.json(updatedUser);
+    });
+  });
+  //   console.log("UPDATE USER - req.user", req.user, "UPDATE DATA", req.body);
 };
