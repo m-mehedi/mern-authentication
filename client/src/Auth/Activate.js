@@ -42,8 +42,9 @@ const Activate = () => {
           show: false
         });
         toast.success(response.data.message);
-        toast.success(`Your account has been activated! Please, login.`);
-        navigate('/login');
+        setTimeout(()=>{
+          navigate('/login');
+        },5000);
       })
       .catch((error) => {
         console.log("ACCOUNT ACTIVATEION ERROR", error.response.data.error);
