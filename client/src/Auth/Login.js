@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, Link } from "react-router-dom";
 import Layout from "../core/Layout";
 import axios from "axios";
 import { authenticate, isAuth } from "./helpers";
@@ -81,8 +81,10 @@ const Login = () => {
             className="form-control"
           />
         </div>
-
-        <Box sx={{ p: 1 }} display="flex" justifyContent="flex-end">
+        <Box sx={{ p: 1 }} display="flex" justifyContent="flex-end">                  
+        <Box sx={{ pr: 1 }} display="flex" justifyContent="flex-start">                    
+        <Link to="/auth/password/forgot" className="btn btn-sm btn-outline-danger ">Forgot password</Link>
+        </Box>
           <Button variant="contained" color="success" onClick={clickSubmit}>
             {buttonText}
           </Button>
@@ -99,6 +101,7 @@ const Login = () => {
         {/* {JSON.stringify({ name, email, password })} */}
         <h1 className="p-5 text-center">Login</h1>
         {loginForm()}
+        <br/>
       </div>
     </Layout>
   );

@@ -6,7 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import jwtDecode from 'jwt-decode'
+import jwtDecode from "jwt-decode";
 
 const Activate = () => {
   const params = useParams();
@@ -39,12 +39,12 @@ const Activate = () => {
         console.log("ACCOUNT ACTIVATEION SUCCESS", response);
         setValues({
           ...values,
-          show: false
+          show: false,
         });
         toast.success(response.data.message);
-        setTimeout(()=>{
-          navigate('/login');
-        },5000);
+        setTimeout(() => {
+          navigate("/login");
+        }, 5000);
       })
       .catch((error) => {
         console.log("ACCOUNT ACTIVATEION ERROR", error.response.data.error);
@@ -54,22 +54,20 @@ const Activate = () => {
 
   const activationLink = () => (
     <div>
-        <Box display="flex" alignItems="center"
-        justifyContent="center">
-            <h3>
-                Hey {name}, Please activate your account!
-            </h3>
-        </Box>
+      <Box display="flex" alignItems="center" justifyContent="center">
+        <h3>Hey {name}, Please activate your account!</h3>
+      </Box>
 
       <Box sx={{ p: 1 }} display="flex" m="auto">
-        <Button variant="contained" color="success" 
-        // onClick={() => {
-        //   clickSubmit(() => {
-        //     toast.success(`Your account has been activated! Please, login.`);
-        //     navigate('login');
-        //   }) }}
-        onClick={clickSubmit}
-        
+        <Button
+          variant="contained"
+          color="success"
+          // onClick={() => {
+          //   clickSubmit(() => {
+          //     toast.success(`Your account has been activated! Please, login.`);
+          //     navigate('login');
+          //   }) }}
+          onClick={clickSubmit}
         >
           Activate Account
         </Button>

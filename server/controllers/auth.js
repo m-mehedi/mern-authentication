@@ -186,7 +186,7 @@ exports.forgotPassword = (req, res) => {
       });
     }
 
-    const token = jwt.sign({ _id: user._id }, process.env.JWT_RESET_PASSWORD, {
+    const token = jwt.sign({ _id: user._id, name: user.name }, process.env.JWT_RESET_PASSWORD, {
       expiresIn: "30m",
     });
 
