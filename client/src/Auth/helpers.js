@@ -64,3 +64,13 @@ export const logout = (next) => {
   removeLocalStorage("user");
   next();
 };
+
+export const updateUser = (res, next) => {
+  console.log("UPDATE USER IN LOCAL STORAGE");
+  if (typeof window !== "undefined") {
+    let auth = JSON.parse(localStorage.getItem("user"));
+    auth = res.data;
+    localStorage.setItem("user", JSON.stringify(auth));
+  }
+  next();
+};
