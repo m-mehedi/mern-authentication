@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Navigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Layout from "../core/Layout";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
@@ -10,6 +10,7 @@ import jwtDecode from 'jwt-decode'
 
 const Activate = () => {
   const params = useParams();
+  let navigate = useNavigate();
   const [values, setValues] = useState({
     name: "",
     token: "",
@@ -41,6 +42,8 @@ const Activate = () => {
           show: false
         });
         toast.success(response.data.message);
+        toast.success(`Your account has been activated! Please, login.`);
+        navigate('/login');
       })
       .catch((error) => {
         console.log("ACCOUNT ACTIVATEION ERROR", error.response.data.error);
@@ -58,7 +61,15 @@ const Activate = () => {
         </Box>
 
       <Box sx={{ p: 1 }} display="flex" m="auto">
-        <Button variant="contained" color="success" onClick={clickSubmit}>
+        <Button variant="contained" color="success" 
+        // onClick={() => {
+        //   clickSubmit(() => {
+        //     toast.success(`Your account has been activated! Please, login.`);
+        //     navigate('login');
+        //   }) }}
+        onClick={clickSubmit}
+        
+        >
           Activate Account
         </Button>
       </Box>

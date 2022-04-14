@@ -9,7 +9,6 @@ import {
   useNavigate,
 } from "react-router-dom";
 import { isAuth, logout } from "../Auth/helpers";
-import withRouter from "./withRouter";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 
