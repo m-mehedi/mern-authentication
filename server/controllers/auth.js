@@ -151,5 +151,26 @@ exports.login = (req, res) => {
 
 exports.requireLogin = expressJWT({
   secret: process.env.JWT_SECRET, // req.user
-  algorithms: ['HS256']
+  algorithms: ["HS256"],
 });
+
+// admin middleware
+exports.adminMiddleware = (req, res, next) => {
+  User.findById({ _id: req.user._id }).exec((err, user) => {
+    if (err || !user) {
+      return res.status(400).json({
+        error: "User not found",
+      });
+    }
+
+    if (user.role !== "admin") {
+      return res.status(400).json({
+        error: "Admin resource! Access denied!!",
+      });
+    }
+
+    // creates an obejct named profile
+    req.profile = user;
+    next();
+  });
+};
